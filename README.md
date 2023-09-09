@@ -1,16 +1,11 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+ # Backend-проект: сервер для Mesto
 
+Создание сервера для Mesto. 
 
-## Директории
+Проект выполнен в рамках обучения на курсе Веб-разработчик от Яндекс Практикум
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+## Используемые технологии: 
+Node.js, Express.js, MongoDB, Postman
 
-## Запуск проекта
-
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Ссылка на проект:  
+ https://github.com/AlbinaKalimulina/express-mesto-gha
