@@ -34,5 +34,5 @@ app.use('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('успешное подключение');
+  // console.log('успешное подключение');
 });
