@@ -6,11 +6,11 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 
 const userSchema = new mongoose.Schema({
-  name: { // у пользователя есть имя — опишем требования к имени в схеме:
-    type: String, // имя — это строка
+  name: {
+    type: String,
     default: 'Жак-Ив Кусто',
-    minlength: 2, // минимальная длина имени — 2 символа
-    maxlength: 30, // а максимальная — 30 символов
+    minlength: 2,
+    maxlength: 30,
   },
   about: {
     type: String,
@@ -57,7 +57,7 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(email,
             throw new UnauthorizedError('Неправильные почта или пароль');
           }
 
-          return user; // теперь user доступен
+          return user;
         });
     });
 };

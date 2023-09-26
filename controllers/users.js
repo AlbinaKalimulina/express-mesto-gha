@@ -21,7 +21,7 @@ module.exports.createUser = (req, res, next) => {
       about,
       avatar,
       email,
-      password: hash, // записываем хеш в базу
+      password: hash,
     }))
 
     .then((user) => res.status(201).send({
@@ -103,10 +103,7 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      // создадим токен
       const token = jwt.sign({ _id: user._id }, 'secretkey', { expiresIn: '7d' });
-
-      // вернём токен
       res.send({ token });
     })
     .catch(next);
