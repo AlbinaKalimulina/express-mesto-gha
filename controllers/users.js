@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const bcrypt = require('bcryptjs'); // импортируем bcrypt
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BadRequestError = require('../errors/bad-request-err');

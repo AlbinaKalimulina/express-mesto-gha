@@ -19,8 +19,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 // подключаем мидлвары, роуты и всё остальное...
 
-// роуты, не требующие авторизации,
-// например, регистрация и логин
+// роуты, не требующие авторизации - регистрация и логин
 app.use('/', require('./routes/signup'));
 app.use('/', require('./routes/signin'));
 
@@ -35,8 +34,8 @@ app.use('*', (req, res) => {
   res.status(404).send({ message: 'Страницы не существует' });
 });
 
-// обработчики ошибок
-app.use(errors()); // обработчик ошибок celebrate
+// обработчик ошибок celebrate
+app.use(errors());
 
 // Если в обработчик пришла ошибка без статуса, возвращаем ошибку сервера
 app.use((err, req, res, next) => {
@@ -54,5 +53,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('успешное подключение');
+  // console.log('успешное подключение');
 });

@@ -8,6 +8,7 @@ const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]
 
 // возвращает информацию о текущем пользователе
 router.get('/me', getUsersMe);
+
 // возвращает всех пользователей
 router.get('/', getUsers);
 
