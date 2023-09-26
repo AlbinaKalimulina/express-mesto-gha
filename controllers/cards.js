@@ -31,19 +31,10 @@ module.exports.deleteCardById = (req, res, next) => {
         throw new ForbiddenError('Нет прав для удаления каточки');
       }
       Card.findByIdAndRemove(req.params.cardId)
-        .orFail()
         .then(() => {
           res.send({ message: 'Карточка удалена' });
         })
-        .catch((err) => {
-          if (err instanceof mongoose.Error.CastError) {
-            next(new BadRequestError('Некорректный _id'));
-          } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-            next(new NotFoundError('Карточка не найдена'));
-          } else {
-            next(err);
-          }
-        });
+        .catch(next);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
