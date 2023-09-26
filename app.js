@@ -1,11 +1,8 @@
-// app.js — входной файл
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 
-const { createUser } = require('./controllers/users');
-const { login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
@@ -24,8 +21,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 // роуты, не требующие авторизации,
 // например, регистрация и логин
-app.post('/signup', createUser);
-app.post('/signin', login);
+app.use('/', require('./routes/signup'));
+app.use('/', require('./routes/signin'));
 
 // авторизация
 app.use(auth);
@@ -37,6 +34,9 @@ app.use('/cards', require('./routes/cards'));
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Страницы не существует' });
 });
+
+// обработчики ошибок
+app.use(errors()); // обработчик ошибок celebrate
 
 // Если в обработчик пришла ошибка без статуса, возвращаем ошибку сервера
 app.use((err, req, res, next) => {
