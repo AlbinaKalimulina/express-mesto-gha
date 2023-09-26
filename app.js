@@ -22,20 +22,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 // подключаем мидлвары, роуты и всё остальное...
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '650b36a647c9a62efbd9a524',
-  };
-
-  next();
-});
-
 // роуты, не требующие авторизации,
 // например, регистрация и логин
-// app.use('/', require('./routes/signup'));
-// app.use('/', require('./routes/signin'));
-
-// создаёт пользователя
 app.post('/signup', createUser);
 app.post('/signin', login);
 
