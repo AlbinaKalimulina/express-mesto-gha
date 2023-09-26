@@ -4,6 +4,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const { createUser } = require('./controllers/users');
+const { login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
+
 const { PORT = 3000 } = process.env;
 
 const app = express();
@@ -20,12 +24,25 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '64fb8bc44f3b4ec60a35ef7e',
+    _id: '650b36a647c9a62efbd9a524',
   };
 
   next();
 });
 
+// роуты, не требующие авторизации,
+// например, регистрация и логин
+// app.use('/', require('./routes/signup'));
+// app.use('/', require('./routes/signin'));
+
+// создаёт пользователя
+app.post('/signup', createUser);
+app.post('/signin', login);
+
+// авторизация
+app.use(auth);
+
+// роуты, которым авторизация нужна
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
