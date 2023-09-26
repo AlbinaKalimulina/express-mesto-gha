@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const NotFoundError = require('./errors/not-found-err');
 
 const auth = require('./middlewares/auth');
 
@@ -9,42 +9,32 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// подключаемся к серверу mongo
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
 });
 
-// подключаем мидлвары, роуты и всё остальное...
-
-// роуты, не требующие авторизации - регистрация и логин
 app.use('/', require('./routes/signup'));
 app.use('/', require('./routes/signin'));
 
-// авторизация
 app.use(auth);
 
-// роуты, которым авторизация нужна
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use('*', (req, res) => {
-  res.status(404).send({ message: 'Страницы не существует' });
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Страницы не существует'));
 });
 
-// обработчик ошибок celebrate
 app.use(errors());
 
-// Если в обработчик пришла ошибка без статуса, возвращаем ошибку сервера
 app.use((err, req, res, next) => {
-  // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
   res
     .status(statusCode)
     .send({
-      // проверяем статус и выставляем сообщение в зависимости от него
       message: statusCode === 500
         ? 'На сервере произошла ошибка'
         : message,
